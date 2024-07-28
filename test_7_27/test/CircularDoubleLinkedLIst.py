@@ -7,14 +7,22 @@ class CircularDoubleLinkedNode(object):
 class CircularDoubleLinkedList(object):
     def __init__(self):
         self.__head = None
+        self.next = None
+        self.prev = None
 
     def is_empty(self):
         return self.__head is None
 
-    def legth(self):
+    def length(self):
         if self.is_empty():
             return 0
         count = 1
+        cNode = self.__head
+        while cNode.next != self.__head:
+            count += 1
+            cNode = cNode.next
+        return count
+
 
     def CreateDoubleLinkedList(self):
         print("输入结点数值后按回车确认，若想结束则输入'#'。")
@@ -27,15 +35,14 @@ class CircularDoubleLinkedList(object):
                 nNode = CircularDoubleLinkedNode(int(data))
                 cNode.next = nNode
                 nNode.prev = cNode
-                cNode = cNode.next
                 nNode.next = self.__head
-                self.prev = nNode
+                cNode = cNode.next
             except:
                 print("输入有误，重新输入")
         print("循环双链表创建完成！")
 
     def TraverseCircularDoubleLinkedListByNext(self):
-        cNode = self.head
+        cNode = self.__head
         while cNode.next != self.__head:
             print(cNode.data, "->", end=" ")
             cNode = cNode.next
@@ -58,15 +65,12 @@ class CircularDoubleLinkedList(object):
 
     def Delete(self):
         print("删除所有值为奇数的结点")
-        cNode = self.next
-        pNode = self.prev
+        cNode = self.__head.next
+        pNode = self.__head.prev
         while cNode.next != self.__head:
             if (cNode.data % 2) != 0:
-                pNode.next = cNode.next
-                cNode.next.prev = cNode.prev
-                temp = cNode
-                cNode = cNode.next
-                del temp
+                break
+
             else:
                 cNode = cNode.next
 
@@ -91,4 +95,4 @@ CDLL = CircularDoubleLinkedList()
 CDLL.CreateDoubleLinkedList()
 CDLL.TraverseCircularDoubleLinkedListByNext()
 # CDLL.DeleteElement()
-CDLL.Delete()
+# CDLL.Delete()
